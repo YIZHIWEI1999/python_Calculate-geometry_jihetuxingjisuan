@@ -1,0 +1,101 @@
+import math  
+  
+class Shape:  
+    def __init__(self, name):  
+        self.name = name  
+  
+    def perimeter(self):  
+        pass  
+  
+    def area(self):  
+        pass  
+  
+class Square(Shape):  
+    def __init__(self, side):  
+        super().__init__("Square")  
+        self.side = side  
+  
+    def perimeter(self):  
+        return 4 * self.side  
+  
+    def area(self):  
+        return self.side ** 2  
+  
+class Rectangle(Shape):  
+    def __init__(self, length, width):  
+        super().__init__("Rectangle")  
+        self.length = length  
+        self.width = width  
+  
+    def perimeter(self):  
+        return 2 * (self.length + self.width)  
+  
+    def area(self):  
+        return self.length * self.width  
+  
+class Triangle(Shape):  
+    def __init__(self, base, height):  
+        super().__init__("Triangle")  
+        self.base = base  
+        self.height = height  
+  
+    def perimeter(self):  
+        # 需要三条边的长度才能准确计算周长，这里简化为等边三角形  
+        return 3 * self.base  
+  
+    def area(self):  
+        return 0.5 * self.base * self.height  
+  
+class Ellipse(Shape):  
+    def __init__(self, a, b):  
+        super().__init__("Ellipse")  
+        self.a = a  # 长半轴  
+        self.b = b  # 短半轴  
+  
+    def perimeter(self):  
+        # 使用近似公式计算椭圆周长  
+        return math.pi * (3*(self.a+self.b) - math.sqrt((3*self.a+self.b)*(self.a+3*self.b)))  
+  
+    def area(self):  
+        return math.pi * self.a * self.b  
+  
+def calculate_properties():  
+    shapes = {  
+        "Square": Square,  
+        "Rectangle": Rectangle,  
+        "Triangle": Triangle,  
+        "Ellipse": Ellipse  
+    }  
+      
+    shape_name = input("Enter the shape name (Square, Rectangle, Triangle, Ellipse): ").strip().capitalize()  
+      
+    if shape_name not in shapes:  
+        print("Invalid shape name. Please try again.")  
+        return  
+      
+    ShapeClass = shapes[shape_name]  
+      
+    if shape_name == "Square":  
+        side = float(input("Enter the side length of the square: "))  
+        shape = ShapeClass(side)  
+    elif shape_name == "Rectangle":  
+        length = float(input("Enter the length of the rectangle: "))  
+        width = float(input("Enter the width of the rectangle: "))  
+        shape = ShapeClass(length, width)  
+    elif shape_name == "Triangle":  
+        base = float(input("Enter the base length of the triangle: "))  
+        height = float(input("Enter the height of the triangle: "))  
+        shape = ShapeClass(base, height)  
+    elif shape_name == "Ellipse":  
+        a = float(input("Enter the length of the major axis (a): "))  
+        b = float(input("Enter the length of the minor axis (b): "))  
+        shape = ShapeClass(a, b)  
+      
+    perimeter = shape.perimeter()  
+    area = shape.area()  
+      
+    print(f"The perimeter of the {shape_name} is: {perimeter}")  
+    print(f"The area of the {shape_name} is: {area}")  
+  
+# 运行计算程序  
+calculate_properties()
